@@ -1,20 +1,70 @@
 import axios from 'axios'
 import { useState, useEffect } from 'react'
 import { Checkbox, Collapse } from "antd";
-import Description from './desc';
+import { Input } from 'antd';
+import { Modal } from 'antd';
 const { Panel } = Collapse;
 
 
 function List() {
 
+  const [description, setDescription] = useState({
+    des : ""
+  });
 
-  const [show, setShow] = useState(true);
+  const handleinput = (e) => {
+    const value = e.target.value;
+    setDescription({
+      ...description,
+      [e.target.name]: value
+    });
+  };
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [desc , setDesc] = useState([]);
+  const showModal = (resp) => {
+    setDesc(resp);
+    // console.log(desc)
+    setIsModalOpen(true);
+  };
+
+  const handleOk = (e) => {
+    console.log(desc.id);
+    const current = new Date();
+  const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
+    const userData = {
+      id: desc.id,
+      title: desc.title,
+      body: description.des,
+      check: desc.check,
+      date: date
+    };
+    axios.put('http://localhost:3030/tasks/' + desc.id, userData)
+      .then(res => console.log(res))
+      .catch(err => console.log(err))
+    window.location.reload(false);
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+  // const [show, setShow] = useState(false);
   const [data, setData] = useState([])
+  const [record, setRecord] = useState(data)
   useEffect(() => {
-    axios.get('http://localhost:3030/tasks')
-      .then(res => setData(res.data))
+    axios.get('http://localhost:3030/tasks/')
+      .then(res => {
+        setData(res.data)
+        setRecord(res.data)
+      })
       .catch(err => console.log(err))
   }, [])
+
+  const search = (e) => {
+    setRecord(data.filter(f => f.title.toLowerCase().includes(e.target.value)))
+  }
 
 
   const delete_task = async (id) => {
@@ -41,13 +91,7 @@ function List() {
     window.location.reload(false);
   }
 
-  //   const delete_selected_task = async (data) => {
-  //     const postsIdsArray = this.data.map((resp) => {
-  //       if (resp.check === true) console.log(resp.id);
-  //       return resp.id;
-  //   })
-  //     postsIdsArray.forEach((id) => this.delete_task(id))
-  //  }
+  
 
 
 
@@ -56,21 +100,29 @@ function List() {
     <div className="mx-auto p-8 h-auto w-1/2 h-2/3 bg-blue-50 shadow-lg my-8 rounded overflow-y-auto ">
 
       <div >
-        {/* <input type="submit" value="mark done" className="bg-blue-500 hover:bg-blue-700 text-white mb-2 py-0 px-2 rounded font-poppins cursor-pointer"/> */}
+        <Input className='form-control mb-2' onChange={search} placeholder='Search'/>
+        
+        
         <Collapse accordion bordered={false}>
-          {data.map((resp, i) => (
+          {record.map((resp, i) => (
             <Panel className={`font-poppins text-md font-bold text-purple-900 ${resp.check === true ? 'line-through' : ''}`} header={resp.title} key={i} extra={<Checkbox checked={resp.check} onClick={() => toggle_check(resp)} />}>
               <p className='font-poppins font-light all-initial'>{resp.body}</p>
               <div>
                 <p className='font-poppins font-light all-initial'>Last Update : {resp.date}</p>
-                <input type="submit" value="update" onClick={() => setShow(!show)} className="bg-blue-500 hover:bg-blue-700 text-white mt-2 py-2 px-4 rounded-full ml-4 font-poppins cursor-pointer" />
+                <input type="submit" value="update" onClick={() => showModal(resp)} className="bg-blue-500 hover:bg-blue-700 text-white mt-2 py-2 px-4 rounded-full ml-4 font-poppins cursor-pointer" />
                 <input type="submit" value="delete" onClick={() => delete_task(resp.id)} className="bg-red-500 hover:bg-red-700 text-white mt-2 py-2 px-4 rounded-full ml-4 font-poppins cursor-pointer" />
               </div>
             </Panel>
           ))}
         </Collapse>
       </div>
-      {show ? <Description /> : null}
+      <>
+      <Modal title="Edit Description" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+      <textarea id='des' rows="5" name="des" onChange={handleinput} value={description.des} className="bg-transparent border-2 rounded border-purple-900 w-full outline-none text-purple-900 font-poppins"/>
+        {/* <input type="submit" value="add" className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-8 rounded-full ml-4 font-poppins cursor-pointer"/> */}
+    
+      </Modal>
+    </>
     </div>
   );
 }

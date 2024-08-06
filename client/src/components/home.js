@@ -4,7 +4,7 @@ import List from './list'
 
 function Home() {
     return (
-      <div className="bg-indigo-100 h-screen ">
+      <div className="bg-indigo-100 h-screen overflow-y-scroll">
           <div>
             <Head/>
             <Box/>
