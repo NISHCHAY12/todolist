@@ -56,5 +56,6 @@ The project follows a modular and organized structure to enhance readability, ma
 5. **run command for Json-server in another terminal:**
 
    ```bash
-   json-server --watch db.json --port 3030
+   npm i json-server
+   npx json-server db.json --port 3030
    ```
