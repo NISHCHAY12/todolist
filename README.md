@@ -37,8 +37,7 @@ The project follows a modular and organized structure to enhance readability, ma
 2. **Navigate to the Project Directory:**
 
    ```bash
-   cd todolist
-   cd client
+   cd todolist/client
    ```
 
 3. **Setup application:**
@@ -47,15 +46,18 @@ The project follows a modular and organized structure to enhance readability, ma
    npm install
    ```
 
-4. **Run react Js command to start application:**
+4. **run command for Json-server in another terminal:**
+
+   ```bash
+   npm i json-server
+   ```
+   ```bash
+   npx json-server db.json --port 3030
+   ```
+   
+5. **Run react Js command to start application:**
 
    ```bash
    npm start
    ```
 
-5. **run command for Json-server in another terminal:**
-
-   ```bash
-   npm i json-server
-   npx json-server db.json --port 3030
-   ```
