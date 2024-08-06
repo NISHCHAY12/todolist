@@ -1,43 +1,29 @@
 {
   "tasks": [
     {
-      "id": "ce8a",
-      "title": "complete Operating system this week",
-      "body": "i am still doing it",
-      "check": false,
-      "date": "5/8/2024"
-    },
-    {
-      "id": "1e46",
-      "title": "random",
-      "body": "update to add description",
+      "id": "5faf",
+      "title": "task 1",
+      "body": "new task",
       "check": false,
       "date": "7/8/2024"
     },
     {
-      "id": "5224",
-      "title": "search krna h",
-      "body": "update to add description",
+      "id": "8d53",
+      "title": "task 2",
+      "body": "second task",
       "check": false,
       "date": "7/8/2024"
     },
     {
-      "id": "ee6e",
-      "title": "swaroop chutiya",
-      "body": "baat to sahi h\n",
+      "id": "961d",
+      "title": "task 3",
+      "body": "task",
       "check": false,
       "date": "7/8/2024"
     },
     {
-      "id": "3de9",
-      "title": "kunal",
-      "body": "update to add description",
-      "check": false,
-      "date": "7/8/2024"
-    },
-    {
-      "id": "91ec",
-      "title": "hui",
+      "id": "5dfa",
+      "title": "task 4",
       "body": "update to add description",
       "check": false,
       "date": "7/8/2024"
